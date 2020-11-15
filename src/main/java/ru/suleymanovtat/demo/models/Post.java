@@ -24,6 +24,11 @@ public class Post {
         this.numberOfViews = numberOfViews;
     }
 
+    public Post(String title, String descriptions) {
+        this.title = title;
+        this.descriptions = descriptions;
+    }
+
     public Long getId() {
         return id;
     }
