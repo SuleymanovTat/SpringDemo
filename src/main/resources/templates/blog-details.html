@@ -7,11 +7,12 @@
 </head>
 <body>
 <header th:insert="blocks/header :: header"/>
-<div th:each ="el : ${posts}" class="alert alert-info mt-2">
+<div th:each ="el : ${post}" class="alert alert-info mt-2">
     <h3 th:text="${el.title}"/>
     <p th:text="${el.descriptions}"/>
     <p>Количество просмотров: <span th:text="${el.numberOfViews}">0</span></p>
-    <a th:href="'/blog/'+ ${el.id}" class="btn btn-warning">Подробнее</a>
+    <a th:href="'/blog/edit/'+ ${el.id}" class="btn btn-warning">Изменить</a>
+    <a th:href="'/blog/delete/'+ ${el.id}" class="btn btn-warning">Удалить</a>
 </div>
 <div th:insert="blocks/footer :: footer"/>
 </body>
