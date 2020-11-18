@@ -58,4 +58,38 @@ public class BlogController {
         model.addAttribute("post", result);
         return "blog-details";
     }
+
+    @GetMapping("/blog/edit/{id}")
+    public String blogUpdatePost(@PathVariable(value = "id") long id, Model model) {
+        if (!mPostRepository.existsById(id)) {
+            return "redirect:/blog";
+        }
+        model.addAttribute("title", "Редактирования");
+        model.addAttribute("descriptions", "Редактирования информации");
+        Optional<Post> post = mPostRepository.findById(id);
+        List<Post> result = new ArrayList<>();
+        post.ifPresent(result::add);
+        model.addAttribute("post", result);
+        return "blog-edit-details";
+    }
+
+    @PostMapping("/blog/edit/{id}")
+    public String blogEditPost(@PathVariable(value = "id") long id, @RequestParam String title, @RequestParam String descriptions, Model model) {
+        model.addAttribute("title", "Добавить запись");
+        model.addAttribute("descriptions", "Форма добавления записей");
+        Post post = mPostRepository.findById(id).orElseThrow(RuntimeException::new);
+        post.setTitle(title);
+        post.setDescriptions(descriptions);
+        mPostRepository.save(post);
+        return "redirect:/blog";
+    }
+
+    @PostMapping("/blog/delete/{id}")
+    public String blogDeletePost(@PathVariable(value = "id") long id, Model model) {
+        model.addAttribute("title", "Добавить запись");
+        model.addAttribute("descriptions", "Форма добавления записей");
+        Post post = mPostRepository.findById(id).orElseThrow(RuntimeException::new);
+        mPostRepository.delete(post);
+        return "redirect:/blog";
+    }
 }
